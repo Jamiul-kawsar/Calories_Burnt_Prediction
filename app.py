@@ -1,17 +1,37 @@
 import streamlit as st
 import pickle
 
+# page configuration
+st.set_page_config(
+    page_title = "Calories Burnt Predictor",
+    page_icon = "🔥",
+    layout = "wide",
+    initial_sidebar_state = "expanded"
+)
+
 # Load the model
-model = pickle.load(open('calories_model.pkl', 'rb'))
+@st.cache_resource
+def load_model():
+    try: 
+        model = pickle.load(open('calories_model.pkl', 'rb'))
+        return model
+    except FileNotFoundError:
+        st.error("Model file 'calories_model.pkl' not found. Please ensure the model file is in the correct directory.")
+        return None
 
-# Application title
-st.title('Calories Burnt Prediction')
-st.write('This app predicts the calories burnt based on your input parameters.')
-st.write('Please enter the following details to get your prediction:')  
+model = load_model()
 
-# Input fields for user data
-gender = st.selectbox("Gender", ["Male", "Female"])
-gender_value = 1 if gender == "Male" else 0
+#webpage style
 
-age = st.number_input("Age", min_value = 1, max_value = 120, value = 20)
-height = st.number_input("Height (cm)", min_value = 50, max_value = 250, value = 165)
+# header
+st.markdown("""
+<div class = "main-header">
+    <h1>🔥 Calories Burnt Predictor</h1>
+    <p>Get accurate predictions based on your personal data and activity data</p>
+</div>
+""", unsafe_allow_html = True)
+
+ # Stop execution if model is not loaded
+if model is None:
+    st.stop()
+
