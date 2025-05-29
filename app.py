@@ -22,7 +22,88 @@ def load_model():
 
 model = load_model()
 
-#webpage style
+#webpage style CSS
+
+st.markdown("""
+<style> 
+    /* General body styles */      
+    /* Sidebar Background Color */
+    section[data-testid="stSidebar"] {
+        background: #000000;
+        border-right: 3px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Sidebar text color */
+    section[data-testid="stSidebar"] * {
+        color: white !important;
+    }
+    
+    /* Sidebar buttons */
+    section[data-testid="stSidebar"] .stButton > button {
+        background-color: #8B0000 !important;
+        color: white !important;
+        border: none;
+        border-radius: 6px;
+        padding: 0.5em 1em;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+    }
+    
+    section[data-testid="stSidebar"] .stButton > button:hover {
+        background-color: #A30000 !important;
+    }
+    .main-header {
+        background: #0095cc; 
+        color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
+    .prediction-card {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 1rem 0;
+    }
+    
+    .metric-card {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 10px;
+        border-left: 4px solid #ff6b6b;
+        margin: 1rem 0;
+    }
+    
+    .stButton > button {
+        background: #0095cc;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 0.5rem 2rem;
+        font-weight: 600;
+        width: 100%;
+        transition: background-color 0.3s ease;
+    }
+    
+    .stButton > button:hover {
+        background: #007bb5;/* Darker blue on hover */
+        color: white;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+    .input-section {
+        background: #000000;
+        padding: 1.5rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 # header
 st.markdown("""
@@ -68,20 +149,21 @@ with col2:
 
         input_data = np.array([[gender_value, age, height, weight, duration, heart_rate, body_temp]])
         colmn1, colmn2 = st.columns(2)
-        with colmn1:
-            # Make prediction
-            with st.spinner("Calculating..."):
-                prediction = model.predict(input_data)[0]
-                #st.success(f"🔥 Predicted Calories Burnt: **{prediction:.2f} kcal**")
-            
-                # Display results with custom styling
-            st.markdown(f"""
-            <div class="prediction-card">
-                <h2>🔥 {prediction:.1f} kcal</h2>
-                <p>Estimated Calories Burnt</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
+
+        # Make prediction
+        with st.spinner("Calculating..."):
+            prediction = model.predict(input_data)[0]
+            #st.success(f"🔥 Predicted Calories Burnt: **{prediction:.2f} kcal**")
+        
+            # Display results with custom styling
+        st.markdown(f"""
+        <div class="prediction-card" >
+            <h2>🔥 {prediction:.1f} kcal</h2>
+            <p>Estimated Calories Burnt</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        with colmn1:    
             #additional insights
             st.markdown("📊 Additional Insights")
 
@@ -126,6 +208,36 @@ with col2:
         st.success("✅ Prediction completed successfully!")
     else:
         st.info("👆 Enter your details and click 'Predict' to see results")
+
+# Additional information section accuracy tips etc.
+st.markdown("---")
+st.subheader("ℹ️ About the Prediction Model")
+
+info_col1, info_col2, info_col3 = st.columns(3)
+with info_col1:
+     st.markdown("""
+    **🎯 Accuracy**
+    - Based on machine learning model
+    - Trained on real fitness data
+    - Considers multiple factors
+    """)
+     
+with info_col2:
+    st.markdown("""
+    **📋 Input Factors**
+    - Personal characteristics
+    - Exercise duration
+    - Heart rate during activity
+    - Body temperature
+    """)
+
+with info_col3:
+    st.markdown("""
+    **💡 Tips**
+    - Ensure accurate heart rate
+    - Use consistent measurements
+    - Consider individual variations
+    """)
 
 #sidebar for additional information
 with st.sidebar:
