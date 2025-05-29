@@ -14,8 +14,9 @@ st.set_page_config(
 @st.cache_resource
 def load_model():
     try: 
-        model = pickle.load(open('calories_model.pkl', 'rb'))
-        return model
+        with open("calories_model.pkl", "rb") as f:
+            model = pickle.load(f)
+            return model
     except FileNotFoundError:
         st.error("Model file 'calories_model.pkl' not found. Please ensure the model file is in the correct directory.")
         return None
