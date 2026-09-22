@@ -273,7 +273,7 @@ with st.sidebar:
 
     st.markdown("""
     ### 🛠️ Developer
-    - [Jamiul Kawsar](https://github.com/Jamiul-kawsar)
+    - [Jamiul Kawsar](https://jamiul-portfolio.vercel.app/)
     - [GitHub Repository](https://github.com/Jamiul-kawsar/Calories_Burnt_Prediction)
     """)
     st.markdown("---")
