@@ -23,6 +23,12 @@ This Streamlit web application predicts the number of calories burned based on u
 - **Pickle** – to load the trained machine learning model
 - **Machine Learning Model** – XGBoost or similar (pre-trained and stored as `calories_model.pkl`)
 
+
+## Visual ScreenShots
+
+![Screenshots_01](<Screenshot/Screenshot from 2026-10-19 11-23-26.png>)
+
+![Screenshots_02](<Screenshot/Screenshot from 2026-10-19 11-23-31.png>)
 ---
 
 ## 📦 Installation
